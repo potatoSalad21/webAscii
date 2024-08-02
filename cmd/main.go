@@ -1,21 +1,16 @@
 package main
 
 import (
-    "github.com/labstack/echo/v4"
-    "github.com/labstack/echo/v4/middleware"
-
-    "github.com/potatoSalad21/webAscii/views/home"
+	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
+	"github.com/potatoSalad21/webAscii/handlers"
 )
 
-func handleHome(echo.Context) error {
-    return nil
-}
-
 func main() {
-    e := echo.New()
-    e.Use(middleware.Logger())
+	e := echo.New()
+	e.Use(middleware.Logger())
 
-    e.GET("/", handleHome)
+	e.GET("/", handlers.HandleHome)
 
-    e.Logger.Fatal(e.Start(":8080"))
+	e.Logger.Fatal(e.Start(":8080"))
 }
