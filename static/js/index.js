@@ -23,6 +23,21 @@ function captureFrame() {
     console.log("Got the frame:", imageData);
 }
 
-getMedia().then(() => {
-    setInterval(captureFrame, 1000);
+function sendData() {
+    const ws = new WebSocket("ws://127.0.0.1:8080/ws", "protocolOne");
+    const enc = new TextEncoder()
+    ws.addEventListener("open", () => {
+        ws.send(enc.encode("DATAAAAAAAAAAAAAAAAA INCOMING"))
+    });
+}
+
+const btn = document.querySelector("#start")
+btn.addEventListener("click", () => {
+    sendData()
+    getMedia().then(() => {
+        setInterval(captureFrame, 1000);
+    });
 });
+
+
+// TODO: send image over websocks
