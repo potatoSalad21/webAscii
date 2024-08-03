@@ -10,6 +10,8 @@ func main() {
 	e := echo.New()
 	e.Use(middleware.Logger())
 
+	e.Static("/static/js", "static/js")
+
 	e.GET("/", handlers.HandleHome)
 
 	e.Logger.Fatal(e.Start(":8080"))

@@ -1,8 +1,35 @@
 package base
 
 templ Show() {
-    <h1 id="title">ASCII Filter</h1>
-    <div id="frame">
+    <style type="text/css">
+        #title {
+            font-size: 16px;
+            color: red;
+        }
 
+        #frames {
+            width: 40rem;
+            height: 20rem;
+
+            border: 5px solid white;
+            display: flex;
+            flex-direction: row;
+        }
+
+        .display {
+            width: 50%;
+            height: 100%;
+
+            border-left: 2px ridge gray;
+        }
+    </style>
+
+    <h1 id="title">ASCII Filter</h1>
+    <div id="frames">
+        <video id="video" class="display"></video>
+        <canvas id="frameCanvas" style="display:none;"></canvas>
+        <div class="display"></div>
     </div>
+
+    <script src="/static/js/index.js" defer></script>
 }
