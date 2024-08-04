@@ -10,7 +10,7 @@ async function getMedia() {
     }
 }
 
-function captureFrame() {
+async function captureFrame() {
     const video = document.querySelector("#video");
     const canvas = document.querySelector("#frameCanvas");
     const ctx = canvas.getContext("2d");
@@ -19,25 +19,34 @@ function captureFrame() {
     canvas.height = video.videoHeight;
 
     ctx.drawImage(video, 0, 0, canvas.width, canvas.heigth);
-    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    console.log("Got the frame:", imageData);
+
+    return new Promise((resolve) => {
+        canvas.toBlob((blob) => {
+            blob.arrayBuffer().then((buffer) => {
+                resolve(buffer);
+            });
+        }, "image/png");
+    });
 }
 
-function sendData() {
-    const ws = new WebSocket("ws://127.0.0.1:8080/ws", "protocolOne");
-    const enc = new TextEncoder()
+function sendData(imgData) {
+    const ws = new WebSocket("ws://127.0.0.1:8080/ws");
+
     ws.addEventListener("open", () => {
-        ws.send(enc.encode("DATAAAAAAAAAAAAAAAAA INCOMING"))
+        ws.send(imgData);
     });
 }
 
 const btn = document.querySelector("#start")
 btn.addEventListener("click", () => {
-    sendData()
     getMedia().then(() => {
-        setInterval(captureFrame, 1000);
+        setInterval(async () => {
+            const data = await captureFrame();
+            if (data) {
+                sendData(data);
+            } else {
+                console.error("Couldn't capture frame");
+            }
+        }, 1000);
     });
 });
-
-
-// TODO: send image over websocks

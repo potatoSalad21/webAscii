@@ -26,7 +26,7 @@ func Show() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<h1 id=\"title\">ASCII Filter</h1><div id=\"frame\"></div>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<style type=\"text/css\">\n        #title {\n            font-size: 16px;\n            color: red;\n        }\n\n        #frames {\n            width: 40rem;\n            height: 20rem;\n\n            border: 5px solid white;\n            display: flex;\n            flex-direction: row;\n        }\n\n        .display {\n            width: 50%;\n            height: 100%;\n\n            border-left: 2px ridge gray;\n        }\n    </style><h1 id=\"title\">ASCII Filter</h1><div id=\"frames\"><video id=\"video\" class=\"display\"></video><canvas id=\"frameCanvas\" style=\"display:none;\"></canvas><div class=\"display\"></div></div><button id=\"start\">Start Recording</button><script src=\"/static/js/index.js\" defer></script>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

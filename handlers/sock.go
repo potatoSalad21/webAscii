@@ -5,6 +5,7 @@ import (
 
 	"github.com/gorilla/websocket"
 	"github.com/labstack/echo/v4"
+	"github.com/potatoSalad21/webAscii/pkg/ascii"
 )
 
 var upgrader = websocket.Upgrader{
@@ -13,6 +14,8 @@ var upgrader = websocket.Upgrader{
 }
 
 func HandleWS(c echo.Context) error {
+	// Receive, Convert to ASCII, Send back
+
 	ws, err := upgrader.Upgrade(c.Response(), c.Request(), nil)
 	if err != nil {
 		return err
@@ -31,6 +34,6 @@ func HandleWS(c echo.Context) error {
 			continue
 		}
 
-		log.Println("\tRecv->", string(buffer))
+		ascii.Convert(buffer)
 	}
 }
