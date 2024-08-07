@@ -14,8 +14,6 @@ var upgrader = websocket.Upgrader{
 }
 
 func HandleWS(c echo.Context) error {
-	// Receive, Convert to ASCII, Send back
-
 	ws, err := upgrader.Upgrade(c.Response(), c.Request(), nil)
 	if err != nil {
 		return err
