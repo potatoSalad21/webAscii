@@ -1,6 +1,7 @@
 package base
 
 templ Show() {
+    <!DOCTYPE html>
     <style type="text/css">
         #title {
             font-size: 16px;
@@ -26,7 +27,7 @@ templ Show() {
 
     <h1 id="title">ASCII Filter</h1>
     <div id="frames">
-        <video id="video" class="display"></video>
+        <video id="video" class="display" autoplay></video>
         <canvas id="frameCanvas" style="display:none;"></canvas>
         <div class="display"></div>
     </div>
