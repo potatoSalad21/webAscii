@@ -9,8 +9,8 @@ import (
 )
 
 var upgrader = websocket.Upgrader{
-	ReadBufferSize:  1024,
-	WriteBufferSize: 1024,
+	ReadBufferSize:  2048,
+	WriteBufferSize: 2048,
 }
 
 func HandleWS(c echo.Context) error {
@@ -23,15 +23,19 @@ func HandleWS(c echo.Context) error {
 	for {
 		mt, buffer, err := ws.ReadMessage()
 		if err != nil {
-			log.Println("read error:", err)
-			continue
+			return err
 		}
 
 		if mt != websocket.BinaryMessage {
-			log.Println("[ERROR] Incorrect content type.")
+			log.Println("[ERROR] Incorrect content type")
 			continue
 		}
 
-		ascii.Convert(buffer)
+		frame, err := ascii.Convert(buffer)
+		if err != nil {
+			log.Println("Cannot convert to ASCII.", err)
+			continue
+		}
+		ws.WriteMessage(websocket.TextMessage, []byte(frame))
 	}
 }
