@@ -2,6 +2,7 @@ package ascii
 
 import (
 	"bytes"
+	"fmt"
 	"image"
 	"image/png"
 	"log"
@@ -9,7 +10,7 @@ import (
 
 func loadImg(data []byte) (*image.NRGBA, error) {
 	imgData := bytes.NewReader(data)
-	img, err := png.Decode(imgData) // ERROR: creates an empty png
+	img, err := png.Decode(imgData)
 	if err != nil {
 		return nil, err
 	}
@@ -24,19 +25,17 @@ func Convert(data []byte) {
 		return
 	}
 
-	density := []string{"`", "'", "\"", ".", "~", "-", "=", "*", ":", ";", "/", "#"}
+	// TODO: scale the image appropirately and send back
+	ramp := "@#&0O[(;:,.'`  "
 	bounds := img.Bounds()
 	for y := 0; y < bounds.Max.Y; y++ {
 		for x := 0; x < bounds.Max.X; x++ {
-			r, g, b, _ := img.At(y, x).RGBA()
-			average := (float64(r) + float64(g) + float64(b)) / 3.0
-			index := average * float64(len(density)-1) / 255
-			log.Println("INDEX", index)
-			log.Println("RGB:", r, g, b)
-			//fmt.Printf(density[int(index)])
+			r, g, b, _ := img.At(x, y).RGBA()
+			grayscale := int(0.299*float64(r) + 0.587*float64(g) + 0.114*float64(b))
 
-			// TODO: map grayscale to character
+			index := len(ramp) * grayscale / 65536
+			fmt.Printf(string(ramp[index]))
 		}
-		//fmt.Printf("\n")
+		fmt.Println()
 	}
 }

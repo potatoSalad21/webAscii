@@ -12,8 +12,6 @@ async function getMedia() {
             });
         });
 
-        console.log(video.videoWidth, "x", video.videoHeight);
-
     } catch (e) {
         console.error("Cannot get webcam input:", e);
         throw(e);
