@@ -47,9 +47,9 @@ func Convert(data []byte) (string, error) {
 
 	var frame string
 	const (
-		ramp   = "@#&0O[(;:,.'`     "
-		scaleX = 8
-		scaleY = 16
+		ramp   = "@#W$9a+=. "
+		scaleX = 5
+		scaleY = 10
 	)
 
 	max := img.Bounds().Max
