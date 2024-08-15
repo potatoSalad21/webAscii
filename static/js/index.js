@@ -65,5 +65,5 @@ btn.addEventListener("click", () => {
                 sendData(ws, data);
             });
         });
-    }, 500);
+    }, 100);
 });
